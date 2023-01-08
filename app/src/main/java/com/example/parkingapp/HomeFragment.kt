@@ -3,6 +3,8 @@ package com.example.parkingapp
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -50,14 +52,23 @@ class HomeFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        button.setOnClickListener {
+
+            parentFragmentManager.beginTransaction().apply {
+                replace(R.id.mapsFragment,MapsFragment())
+                commit()
+            }
+        }
+
+
         timePicker.setOnClickListener{
-
-
             val cal = Calendar.getInstance()
             if (checkDay.isChecked)
                 pickDate()
             else{
                 DatePickerDialog(requireContext(), { view, year, month, dayOfMonth ->
+                    pickDate(year,month, dayOfMonth)
                 },cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH)).show()
         }}
 
